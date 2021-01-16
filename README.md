@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.com/por964/sem3backend.svg?branch=main)](https://travis-ci.com/por964/sem3backend)# examn3start
+[![Build Status](https://travis-ci.com/por964/examn3start.svg?branch=master)](https://travis-ci.com/por964/examn3start)
