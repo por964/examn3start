@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
  * @author claes
  */
 @Entity
+@NamedQuery(name = "Coach.deleteAllRows", query = "DELETE from Coach")
 public class Coach implements Serializable {
 
     private static final long serialVersionUID = 1L;

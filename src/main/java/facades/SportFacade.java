@@ -72,9 +72,9 @@ public class SportFacade {
         EntityManager em = emf.createEntityManager();
 
         if (sportExists(sportName)) {
-
+            Sport sp = new Sport(sportName, description);
             try {
-                Sport sp = new Sport(sportName, description);
+
                 em.getTransaction().begin();
                 em.persist(sp);
                 em.getTransaction().commit();
@@ -94,12 +94,10 @@ public class SportFacade {
 
     public String addSportTeam(String price, String name, String minAge, String maxAge, String sport) {
         EntityManager em = emf.createEntityManager();
-        
+
         boolean sportex = sportExists(sport);
         
-        
-
-        if (teamExists(name) && !sportex ) {
+        if (teamExists(name) && !sportex) {
             try {
                 Sport sp = em.find(Sport.class, sport);
                 SportTeam st = new SportTeam(name, price, minAge, maxAge);
@@ -125,7 +123,5 @@ public class SportFacade {
             em.close();
         }
     }
-    
-    
 
 }

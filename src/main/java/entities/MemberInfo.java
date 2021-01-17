@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
 /**
@@ -17,6 +18,7 @@ import javax.persistence.Temporal;
  * @author claes
  */
 @Entity
+@NamedQuery(name = "MemberInfo.deleteAllRows", query = "DELETE from MemberInfo")
 public class MemberInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

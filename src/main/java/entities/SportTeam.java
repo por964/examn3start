@@ -20,7 +20,8 @@ import javax.persistence.OneToMany;
  * @author claes
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "SportTeam.getAllRows", query = "SELECT s from SportTeam s")})
+@NamedQuery(name = "SportTeam.getAllRows", query = "SELECT s from SportTeam s")
+@NamedQuery(name = "SportTeam.deleteAllRows", query = "DELETE from SportTeam")
 public class SportTeam implements Serializable {
 
     private static final long serialVersionUID = 1L;

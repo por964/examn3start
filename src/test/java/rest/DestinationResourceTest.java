@@ -8,6 +8,7 @@ import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.net.URI;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
@@ -16,8 +17,10 @@ import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import utils.EMF_Creator;
 
@@ -90,6 +93,14 @@ public class DestinationResourceTest {
         httpServer.shutdownNow();
     }
 
+    @AfterEach
+    public void tearDown() throws Exception {
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+    }
+
   
 
     @Test
@@ -116,14 +127,7 @@ public class DestinationResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode());
     }
-    
-//    @Test
-//    public void testSaveFavourite(){
-//        given()
-//                .contentType("application(json")
-//                .get("/destination/open/"+d1.getName()+"/"+u2.getUserName()).then()
-//                .assertThat()
-//                .statusCode(HttpStatus.OK_200.getStatusCode());
-//    }
+
+   
 
 }
