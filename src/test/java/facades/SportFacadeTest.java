@@ -1,5 +1,7 @@
 package facades;
 
+import dtos.SportDTO;
+import dtos.SportsDTO;
 import entities.Coach;
 import entities.MemberInfo;
 import entities.Player;
@@ -8,8 +10,13 @@ import entities.SportTeam;
 import errorhandling.AlreadyExistsException;
 import errorhandling.MissingInputException;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -129,6 +136,46 @@ public class SportFacadeTest {
         SportFacade expectedResult = null;
         SportFacade result = SportFacade.getSportFacade(emff);
         assertNotEquals(expectedResult, result);
+    }
+    @Test
+    public void testGetSportCount() {
+        assertEquals(4, facade.getSportCount(), "3 rows expected");
+    }
+    
+    @Test
+    public void testGetAllSports() {
+        SportsDTO spDTO = facade.getAllSports();
+        List<SportDTO> list = spDTO.getAll();
+        
+        assertThat(list, everyItem(Matchers.hasProperty("name")));
+        assertThat(list, Matchers.hasItems(Matchers.<SportDTO>hasProperty("name", is("sport1")),
+                Matchers.<SportDTO>hasProperty("name", is("sport2")),
+                Matchers.<SportDTO>hasProperty("name", is("sport3"))
+                ));
+    }
+    
+    @Test
+    public void testAddSport() throws MissingInputException {
+        EntityManager em = emf.createEntityManager();
+        
+        String name = "dart";
+        String description = "throwing";
+        
+        Sport sp = new Sport(name, description);
+        
+        SportDTO spdto = new SportDTO(sp);
+        
+        facade.addSport(name, description);
+        
+        try {
+            em.getTransaction().begin();
+            
+            em.find(Sport.class, name);
+            
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     

@@ -21,5 +21,14 @@ public class SportsDTO {
         });
     }
 
+    public List<SportDTO> getAll() {
+        return all;
+    }
+
+    public void setAll(List<SportDTO> all) {
+        this.all = all;
+    }
+    
+
     
 }

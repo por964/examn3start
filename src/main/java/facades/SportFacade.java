@@ -40,7 +40,7 @@ public class SportFacade {
     public long getSportCount() {
         EntityManager em = emf.createEntityManager();
         try {
-            long sportCount = (long) em.createQuery("SELECT COUNT(r) FROM Sport r").getSingleResult();
+            Long sportCount = (Long) em.createQuery("SELECT COUNT(r) FROM Sport r").getSingleResult();
             return sportCount;
         } finally {
             em.close();

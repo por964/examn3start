@@ -28,7 +28,7 @@ import utils.EMF_Creator;
  *
  * @author am
  */
-@Disabled
+//@Disabled
 public class DestinationResourceTest {
 
     private static final int SERVER_PORT = 7777;
@@ -119,14 +119,7 @@ public class DestinationResourceTest {
 
     }
 
-    @Test
-    public void testGetOpenDestination() {
-        given()
-                .contentType("application/json")
-                .get("/destination/open/"+d1.getName()).then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode());
-    }
+
 
    
 
