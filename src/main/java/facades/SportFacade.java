@@ -116,21 +116,15 @@ public class SportFacade {
         }
         return name;
     }
-    /*
+
     public SportTeamsDTO getAllTeams() {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<SportTeam> query = em.createQuery("SELECT s FROM SPORTTEAM s", SportTeam.class);
-            List<SportTeam> resultlist = query.getResultList();
-            
-            SportTeamsDTO result = new SportTeamsDTO(resultlist);
-            
-            
-            return result;
+            return new SportTeamsDTO(em.createNamedQuery("SportTeam.getAllRows").getResultList());
         } finally {
             em.close();
         }
-    }*/
+    }
     
     
 

@@ -112,7 +112,7 @@ public class DestinationResource {
         String result = SPORTFACADE.addSportTeam(price, name, minage, maxage, sportname);
         return gson.toJson(result);
     }
-    /*
+    
     @GET
     @Path("open/teams")
     @Produces(MediaType.APPLICATION_JSON)
@@ -120,7 +120,7 @@ public class DestinationResource {
         SportTeamsDTO result = SPORTFACADE.getAllTeams();
         return gson.toJson(result);
 
-    }*/
+    }
     
     
     
