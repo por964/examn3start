@@ -1,13 +1,21 @@
-  
 package utils;
 
+import dtos.SportsDTO;
+import entities.Coach;
 import entities.Favourite;
+import entities.MemberInfo;
+import entities.Player;
 import entities.Role;
+import entities.Sport;
+import entities.SportTeam;
 import entities.User;
 import entities.UserInfo;
 import errorhandling.AlreadyExistsException;
 import errorhandling.MissingInputException;
 import facades.UserFacade;
+import facades.SportFacade;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,35 +26,51 @@ public class SetupTestUsers {
 
     public static void main(String[] args) throws MissingInputException, AlreadyExistsException {
 
-
-
-        // IMPORTAAAAAAAAAANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // This breaks one of the MOST fundamental security rules in that it ships with default users and passwords
-        // CHANGE the three passwords below, before you uncomment and execute the code below
-        // Also, either delete this file, when users are created or rename and add to .gitignore
-        // Whatever you do DO NOT COMMIT and PUSH with the real passwords
-        
-        //Favourite favor = new Favourite("Germany");
-        
-        //em.getTransaction().begin();
-        //em.persist(favor);
-        //em.getTransaction().commit();
-        
-        //UserFacade FACADE = UserFacade.getUserFacade(emf);
-        
-        //FACADE.getFavorites("user");
-        
-        
-
-        //FACADE.addFavourite("belgium", "user");
-        
-        //System.out.println(FACADE.newUser("nybruger", "claes"));
-        //FACADE.addFavourite("greece", "user");
-        //FACADE.addFavourite("ireland", "user");
-        
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
-                
+        /*
+        Sport basket = new Sport("basket", "sjovt");
+        
+        SportTeam fck = new SportTeam("200", "FCK", "22", "25");
+        
+        basket.addSportTeam(fck);
+        
+        fck.setSport(basket);
+        
+        em.getTransaction().begin();
+        em.persist(basket);
+        em.persist(fck);
+        
+        em.getTransaction().commit();
+
+        Sport s1 = new Sport("tennis", "fun");
+
+        SportTeam united = new SportTeam("250", "UNITED", "24", "26");
+
+        Player p1 = new Player("claes", "mail", "phone", "54");
+
+        MemberInfo m1 = new MemberInfo();
+        
+        Coach c1 = new Coach("Hans", "hotfiel", "1234");
+        
+        c1.addSportTeam(united);
+
+        m1.setPayed(true);
+        
+        p1.addMemberInfo(m1);
+
+        united.addMemberInfo(m1);
+        
+        s1.addSportTeam(united);
+        
+        em.getTransaction().begin();
+        em.persist(c1);
+        em.persist(s1);
+        em.persist(p1);
+        em.persist(united);
+        em.getTransaction().commit();
+
+        
         User user = new User("user", "test1");
         User admin = new User("admin", "test1");
         User both = new User("user_admin", "test1");
@@ -57,11 +81,7 @@ public class SetupTestUsers {
         User user3 = new User("user3", "test3");
         User user4 = new User("user4", "test4");
         User user5 = new User("user5", "test5");
-
-        if (admin.getUserPass().equals("test") || user.getUserPass().equals("test") || both.getUserPass().equals("test")) {
-            throw new UnsupportedOperationException("You have not changed the passwords");
-        }
-
+        
         em.getTransaction().begin();
         UserInfo inf = new UserInfo("claesvonh", "1234");
         inf.setUser(claes);
@@ -91,41 +111,16 @@ public class SetupTestUsers {
         em.persist(user3);
         em.persist(user4);
         em.persist(user5);
-        //em.persist(fav);
         em.getTransaction().commit();
-        System.out.println("PW: " + user.getUserPass());
-        System.out.println("Testing user with OK password: " + user.verifyPassword("test"));
-        System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
-        System.out.println("Created TEST Users");
-
-        //FACADE.addFavourite("Denmark", "user");
-        /*
-                
-                //Favourite fav = em.find(Favourite.class, "denmark");
-<<<<<<< HEAD
-                
-=======
-
-                
-
->>>>>>> 01705eaa8783ee5a6907e8ff242afddb551da7a4
-                
-                //Favourite favourite = new Favourite("denmark");
-                
-                TypedQuery<Favourite> query = em.createQuery("SELECT f FROM Favourite f WHERE f.countryName = :country", Favourite.class);
-                query.setParameter("country", "norway");
-                Favourite favourite = query.getSingleResult();
-                             
-                User user = em.find(User.class, "user4");
-                
-                //user.removeFavourite(favourite);                
-                
-                em.getTransaction().begin();
-                //user.getFavourites().remove(favourite);
-                user.removeFavourite(favourite);
-                em.getTransaction().commit();
-                em.close();
-*/
+        */
+        
+        SportTeam abc = new SportTeam("300", "abc", "2", "2");
+        
+        Sport gang = new Sport("langsomt", "kedeligt");
+        
+        
+        
+        
     }
 
 }

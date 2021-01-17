@@ -2,6 +2,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.SportTeamsDTO;
+import dtos.SportsDTO;
 import entities.Favourite;
 import errorhandling.AlreadyExistsException;
 import errorhandling.MissingInputException;
@@ -17,10 +19,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import facades.DestinationFacade;
+import facades.SportFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import utils.EMF_Creator;
@@ -34,6 +38,7 @@ public class DestinationResource {
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final UserFacade FACADE = UserFacade.getUserFacade(EMF);
     private static final DestinationFacade DESTINATIONFACADE = DestinationFacade.getDestinationFacade(EMF);
+    private static final SportFacade SPORTFACADE = SportFacade.getSportFacade(EMF);
     
     @GET
     @Path("open/favourites/{user}")
@@ -81,5 +86,45 @@ public class DestinationResource {
         String result = gson.toJson(DESTINATIONFACADE.deleteFavourite(country, userName));
         return result;
     }
+    
+    @GET
+    @Path("open/sports")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSports() throws IOException, InterruptedException, ExecutionException, TimeoutException {
+        SportsDTO result = SPORTFACADE.getAllSports();
+        return gson.toJson(result);
+
+    }
+    
+    @POST
+    @Path("open/sport/{sportname}/{description}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String addSport(@PathParam("sportname") String name, @PathParam("description") String description) throws MissingInputException {
+        String result = SPORTFACADE.addSport(name, description);
+        return gson.toJson(result);
+    }
+    
+    @POST
+    @Path("open/sport/team/{price}/{name}/{minage}/{maxage}/{sportname}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String addSportTeam(@PathParam("price") String price, @PathParam("name") String name, @PathParam("minage") String minage,
+            @PathParam("maxage") String maxage, @PathParam("sportname") String sportname) throws MissingInputException {
+        String result = SPORTFACADE.addSportTeam(price, name, minage, maxage, sportname);
+        return gson.toJson(result);
+    }
+    
+    @GET
+    @Path("open/teams")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTeams() throws IOException, InterruptedException, ExecutionException, TimeoutException {
+        SportTeamsDTO result = SPORTFACADE.getAllTeams();
+        return gson.toJson(result);
+
+    }
+    
+    
+    
+    
+    
     
 }
