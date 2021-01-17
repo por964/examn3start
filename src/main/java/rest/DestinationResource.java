@@ -9,6 +9,7 @@ import dtos.SportsDTO;
 import entities.Favourite;
 import errorhandling.AlreadyExistsException;
 import errorhandling.MissingInputException;
+import errorhandling.NotFoundException;
 import facades.UserFacade;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -113,7 +114,6 @@ public class DestinationResource {
         return gson.toJson(result);
     }
 
-
     @POST
     @Path("addteam/{sport}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -132,5 +132,24 @@ public class DestinationResource {
         return gson.toJson(result);
 
     }
+
+    @PUT
+    @Path("team")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String editTeam(String team) throws NotFoundException {
+        SportTeamDTO spdto = gson.fromJson(team, SportTeamDTO.class);
+        SportTeamDTO result = SPORTFACADE.editTeam(spdto);
+        return gson.toJson(result);
+    }
+    @DELETE
+    @Path("delete/{teamname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String deleteCustomer(@PathParam("teamname") String teamName) throws NotFoundException {
+        SportTeamDTO result = SPORTFACADE.deleteTeam(teamName);
+        return gson.toJson(result);
+    }
+    
+
 
 }

@@ -6,6 +6,7 @@ import dtos.SportsDTO;
 import entities.Sport;
 import entities.SportTeam;
 import errorhandling.MissingInputException;
+import errorhandling.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -96,7 +97,7 @@ public class SportFacade {
         EntityManager em = emf.createEntityManager();
 
         boolean sportex = sportExists(sport);
-        
+
         if (teamExists(name) && !sportex) {
             try {
                 Sport sp = em.find(Sport.class, sport);
@@ -124,4 +125,44 @@ public class SportFacade {
         }
     }
 
+    public SportTeamDTO editTeam(SportTeamDTO st) throws NotFoundException {
+        EntityManager em = getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            SportTeam sportteam = em.find(SportTeam.class, st.getTeamName());
+            if (sportteam == null) {
+                throw new NotFoundException("Team doesn't exist");
+            } else {
+                sportteam.setPricePerYear(st.getPricePerYear());
+                sportteam.setMinAge(st.getMinAge());
+                sportteam.setMaxAge(st.getMaxAge());
+            }
+            em.getTransaction().commit();
+            return new SportTeamDTO(sportteam);
+        } finally {
+            em.close();
+        }
+    }
+
+    public SportTeamDTO deleteTeam(String teamName) throws NotFoundException {
+        EntityManager em = getEntityManager();
+
+        SportTeam sportteam = em.find(SportTeam.class, teamName);
+
+        if (sportteam == null) {
+            throw new NotFoundException("Team doesn't exist");
+        } else {
+            try {
+                em.getTransaction().begin();
+                em.remove(sportteam);
+                em.getTransaction().commit();
+
+            } finally {
+                em.close();
+            }
+            return new SportTeamDTO(sportteam);
+        }
+
+    }
 }
