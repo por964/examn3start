@@ -128,27 +128,43 @@ public class SportFacade {
     public SportTeamDTO editTeam(SportTeamDTO st) throws NotFoundException {
         EntityManager em = getEntityManager();
 
-        try {
-            em.getTransaction().begin();
-            SportTeam sportteam = em.find(SportTeam.class, st.getTeamName());
-            if (sportteam == null) {
-                throw new NotFoundException("Team doesn't exist");
-            } else {
+        //SportTeam sportteam = em.find(SportTeam.class, st.getTeamName());
+        String id = st.getTeamName();
+        
+        TypedQuery<SportTeam> query = em.createQuery("SELECT s FROM SportTeam s WHERE s.teamName = :id", SportTeam.class);
+                query.setParameter("id", id);
+                SportTeam sportteam = query.getSingleResult();
+
+        if (sportteam == null) {
+            throw new NotFoundException("Team doesn't exist");
+        } else {
+
+            try {
+                em.getTransaction().begin();
+
                 sportteam.setPricePerYear(st.getPricePerYear());
                 sportteam.setMinAge(st.getMinAge());
                 sportteam.setMaxAge(st.getMaxAge());
+
+                em.getTransaction().commit();
+
+            } finally {
+                em.close();
             }
-            em.getTransaction().commit();
             return new SportTeamDTO(sportteam);
-        } finally {
-            em.close();
         }
     }
 
-    public SportTeamDTO deleteTeam(String teamName) throws NotFoundException {
+    public SportTeamDTO deleteTeam(String teamname) throws NotFoundException {
         EntityManager em = getEntityManager();
 
-        SportTeam sportteam = em.find(SportTeam.class, teamName);
+        //SportTeam sportteam = em.find(SportTeam.class, teamName);
+        
+        String team = "Mix";
+        
+        TypedQuery<SportTeam> query = em.createQuery("SELECT s FROM SportTeam s WHERE s.teamName = :id", SportTeam.class);
+                query.setParameter("id", team);
+                SportTeam sportteam = query.getSingleResult();
 
         if (sportteam == null) {
             throw new NotFoundException("Team doesn't exist");

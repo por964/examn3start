@@ -134,11 +134,12 @@ public class DestinationResource {
     }
 
     @PUT
-    @Path("team")
+    @Path("team/{teamname}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String editTeam(String team) throws NotFoundException {
+    public String editTeam(@PathParam("teamname")String teamName,String team) throws NotFoundException {
         SportTeamDTO spdto = gson.fromJson(team, SportTeamDTO.class);
+        spdto.setTeamName(teamName);
         SportTeamDTO result = SPORTFACADE.editTeam(spdto);
         return gson.toJson(result);
     }
